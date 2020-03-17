@@ -1,0 +1,213 @@
+﻿<Controls:MetroWindow x:Class="Measures.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:h="clr-namespace:Measures.Helper"
+        DataContext="{Binding Path=Main, Source={StaticResource Locator}}"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        TitlebarHeight="33" Title="TyroTools-Measures" Loaded="MetroWindow_Loaded"
+        Height="670" Width="800" Icon="/Asserts/Logo.png" ResizeMode="CanResizeWithGrip">
+
+    <!--标题栏标题设置-->
+    <Controls:MetroWindow.TitleTemplate>
+        <DataTemplate>
+            <TextBlock Text="{TemplateBinding Content}" TextTrimming="CharacterEllipsis"
+                   VerticalAlignment="Center" Margin="8 0 8 0"
+                   FontWeight="Light" FontSize="18" />
+        </DataTemplate>
+    </Controls:MetroWindow.TitleTemplate>
+
+    <!--标题栏程序图标设置-->
+    <Controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Image Source="{TemplateBinding Content}" Width="30" Height="30" Stretch="Uniform"/>
+        </DataTemplate>
+    </Controls:MetroWindow.IconTemplate>
+
+    <!--标题栏右侧按钮设置-->
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Controls:ToggleSwitch x:Name="btnTheme" OnLabel="暗黑" OffLabel="明亮" Foreground="White"
+                                   OffSwitchBrush="LightGray" OnSwitchBrush="White" ThumbIndicatorBrush="WhiteSmoke"
+                                   IsCheckedChanged="btnTheme_IsCheckedChanged"/>
+            <Button x:Name="btnDonate" Content="&#xe7ee;" FontFamily="Asserts/Fonts/#iconfont" FontSize="20"
+                    Click="btnDonate_Click" ToolTip="打赏"/>
+            <Button x:Name="btnAbout" Content="&#xe605;" FontFamily="Asserts/Fonts/#iconfont" FontSize="20"
+                    Click="btnAbout_Click" ToolTip="关于"/>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+
+    <Window.Resources>
+        <!--字符串和浮点数转换工具-->
+        <h:DoubleStringConverter x:Key="myConv"/>
+
+        <!--显示单位类别内的所有单位的样式-->
+        <Style x:Key="itemsStyle" TargetType="ItemsControl">
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Grid Margin="5" Width="140">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Viewbox StretchDirection="DownOnly" Stretch="Uniform" HorizontalAlignment="Left">
+                                    <TextBlock Text="{Binding NameCN}" Margin="5"/>
+                                </Viewbox>
+                                <TextBox  Margin="5" Width="110" HorizontalAlignment="Left" Grid.Row="1" MouseDoubleClick="TextBox_MouseDoubleClick">
+                                    <TextBox.Text>
+                                        <Binding Path="Value" UpdateSourceTrigger="PropertyChanged" StringFormat="{}{0:G6}" ValidatesOnDataErrors="True" Converter="{StaticResource myConv}">
+                                            <Binding.ValidationRules>
+                                                <h:NumericRule/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--分组显示单位的样式-->
+        <Style x:Key="groupItemStyle" TargetType="GroupItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GroupItem">
+                        <GroupBox Margin="0,10">
+                            <GroupBox.Header>
+                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="Bold" FontSize="14"/>
+                            </GroupBox.Header>
+                            <ItemsPresenter/>
+                        </GroupBox>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--数据模板-一般单位类别-->
+        <DataTemplate x:Key="CommonTabContent">
+            <ItemsControl Style="{StaticResource itemsStyle}" Margin="0,30,0,0"
+                          ItemsSource="{Binding Units}"/>
+        </DataTemplate>
+
+        <!--数据模板-压力单位类别-->
+        <DataTemplate x:Key="dtPressure">
+            <StackPanel Margin="5">
+                <StackPanel.Resources>
+                    <CollectionViewSource x:Key="UnitsByGroup" Source="{Binding Units}">
+                        <CollectionViewSource.GroupDescriptions>
+                            <PropertyGroupDescription PropertyName="Group"/>
+                        </CollectionViewSource.GroupDescriptions>
+                    </CollectionViewSource>
+                </StackPanel.Resources>
+
+                <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Center">
+                    <TextBlock Text="大气压" VerticalAlignment="Center"/>
+                    <TextBox Width="110" Margin="20,0">
+                        <TextBox.Text>
+                            <Binding Path="DataContext.ATM" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <h:NumericRule/>
+                                    <h:AtmRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock Text="kPa" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <ItemsControl Style="{StaticResource itemsStyle}" TabIndex="1"
+                              ItemsSource="{Binding Source={StaticResource UnitsByGroup}}">
+                    <ItemsControl.GroupStyle>
+                        <GroupStyle ContainerStyle="{StaticResource groupItemStyle}"/>
+                    </ItemsControl.GroupStyle>
+                </ItemsControl>
+            </StackPanel>
+        </DataTemplate>
+
+        <!--数据模板-粘度单位类别-->
+        <DataTemplate x:Key="dtViscosity">
+            <StackPanel Margin="5">
+                <StackPanel.Resources>
+                    <CollectionViewSource x:Key="UnitsByGroup" Source="{Binding Units}">
+                        <CollectionViewSource.GroupDescriptions>
+                            <PropertyGroupDescription PropertyName="Group"/>
+                        </CollectionViewSource.GroupDescriptions>
+                    </CollectionViewSource>
+                </StackPanel.Resources>
+
+                <StackPanel Orientation="Horizontal" Margin="5" VerticalAlignment="Center">
+                    <TextBlock Text="密度" VerticalAlignment="Center"/>
+                    <TextBox Width="110" Margin="20,0">
+                        <TextBox.Text>
+                            <Binding Path="DataContext.Rho" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Window}" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <h:NumericRule/>
+                                    <h:RhoRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock Text="kg/m3" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <ItemsControl Style="{StaticResource itemsStyle}" TabIndex="1"
+                              ItemsSource="{Binding Source={StaticResource UnitsByGroup}}">
+                    <ItemsControl.GroupStyle>
+                        <GroupStyle ContainerStyle="{StaticResource groupItemStyle}"/>
+                    </ItemsControl.GroupStyle>
+                </ItemsControl>
+            </StackPanel>
+        </DataTemplate>
+
+    </Window.Resources>
+
+    <Grid Margin="10,2">
+        <Grid.Resources>
+            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+        </Grid.Resources>
+
+        <TabControl x:Name="tabMeasures" ItemsSource="{Binding UnitSets}" SelectionChanged="tabMeasures_SelectionChanged">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding NameCN}"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ContentPresenter Content="{Binding}" Name="contentPresenter" ContentTemplate="{StaticResource ResourceKey=CommonTabContent}"/>
+                    </ScrollViewer>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding NameEN}" Value="Pressure">
+                            <Setter TargetName="contentPresenter" Property="ContentTemplate" Value="{StaticResource ResourceKey=dtPressure}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding NameEN}" Value="Viscosity">
+                            <Setter TargetName="contentPresenter" Property="ContentTemplate" Value="{StaticResource ResourceKey=dtViscosity}"/>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </Grid>
+
+</Controls:MetroWindow>
