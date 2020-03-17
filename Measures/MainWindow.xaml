@@ -110,7 +110,7 @@
 
         <!--数据模板-压力单位类别-->
         <DataTemplate x:Key="dtPressure">
-            <StackPanel Margin="5">
+            <StackPanel Margin="5,5,5,0">
                 <StackPanel.Resources>
                     <CollectionViewSource x:Key="UnitsByGroup" Source="{Binding Units}">
                         <CollectionViewSource.GroupDescriptions>
@@ -145,7 +145,7 @@
 
         <!--数据模板-粘度单位类别-->
         <DataTemplate x:Key="dtViscosity">
-            <StackPanel Margin="5">
+            <StackPanel Margin="5,5,5,0">
                 <StackPanel.Resources>
                     <CollectionViewSource x:Key="UnitsByGroup" Source="{Binding Units}">
                         <CollectionViewSource.GroupDescriptions>
