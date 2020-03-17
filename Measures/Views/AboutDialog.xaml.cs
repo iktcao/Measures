@@ -22,7 +22,7 @@ namespace Measures.Views
             this.AppVersion = "版本：" + GetAssemblyVersion();
             this.AppCopyright = GetAssemblyCopyright();
             this.uriBlog = new Uri("https://iktcao.github.io/");
-            this.uriGithub = new Uri("https://github.com/iktcao/");
+            this.uriGithub = new Uri("https://github.com/iktcao/Measures/");
             this.uriEmail = new Uri("mailto:iktcao@gmail.com?subject=关于工程单位换算程序的反馈&body=反馈如下:");
 
             this.SupportInfos = new ObservableCollection<SupportInfo>()
