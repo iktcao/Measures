@@ -11,7 +11,7 @@
         WindowStartupLocation="CenterScreen"
         GlowBrush="{DynamicResource AccentColorBrush}"
         TitlebarHeight="33" Title="TyroTools-Measures" Loaded="MetroWindow_Loaded"
-        Height="670" Width="800" Icon="/Asserts/Logo.png" ResizeMode="CanResizeWithGrip">
+        Height="680" Width="800" Icon="/Asserts/Logo.png" ResizeMode="CanResizeWithGrip">
 
     <!--标题栏标题设置-->
     <Controls:MetroWindow.TitleTemplate>
