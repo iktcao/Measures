@@ -15,6 +15,14 @@ namespace Measures.Models
         public string NameEN { get; set; }
         public string SIUnit { get; set; }
 
+        // 数据显示精度
+        private int _precision=6;
+        public int Precision
+        {
+            get { return _precision; }
+            set { _precision = value; }
+        }
+
         // 属性：大气压
         private string _atm = "101.325";
         public string ATM
@@ -86,6 +94,8 @@ namespace Measures.Models
                 {
                     double dblSeed;
                     double dblFactor;
+                    string strFormat = "{0:G" + this.Precision.ToString() + "}";
+
                     if (this.NameEN == "Pressure" || this.NameEN == "Viscosity")
                     {
                         dblSeed = EvalNum(currentUnit.Seed);
@@ -113,8 +123,8 @@ namespace Measures.Models
                             {
                                 dblSeed = double.Parse(item.Seed);
                                 dblFactor = double.Parse(item.Factor);
-                            }
-                            item.Value = (dblValueSI / dblFactor - dblSeed).ToString();
+                            }                            
+                            item.Value = string.Format(strFormat, (dblValueSI / dblFactor - dblSeed));
                             item.PropertyChanged += OnValueChanged;
                         }
                     }
