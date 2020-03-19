@@ -13,6 +13,8 @@ namespace Measures.Helper
             {
                 return string.Empty;
             }
+            else if (str.EndsWith(".") || str.EndsWith("E") || str.EndsWith("e") || str.EndsWith("0"))
+                return value;
             else if (double.TryParse(value.ToString(), out dbl))
                 return dbl;
             else

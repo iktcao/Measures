@@ -72,7 +72,7 @@
                                 </Viewbox>
                                 <TextBox  Margin="5" Width="110" HorizontalAlignment="Left" Grid.Row="1" MouseDoubleClick="TextBox_MouseDoubleClick">
                                     <TextBox.Text>
-                                        <Binding Path="Value" UpdateSourceTrigger="PropertyChanged" StringFormat="{}{0:G6}" ValidatesOnDataErrors="True" Converter="{StaticResource myConv}">
+                                        <Binding Path="Value" UpdateSourceTrigger="PropertyChanged" StringFormat="{}{0:G8}" ValidatesOnDataErrors="True" Converter="{StaticResource myConv}">
                                             <Binding.ValidationRules>
                                                 <h:NumericRule/>
                                             </Binding.ValidationRules>
