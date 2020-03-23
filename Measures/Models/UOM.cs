@@ -205,7 +205,7 @@ namespace Measures.Models
 
         public UnitSet heatCapacity = new UnitSet()
         {
-            NameCN = "热导率",
+            NameCN = "热容",
             NameEN = "HeatCapacity",
             SIUnit = "J__kg_C",
             Units = new ObservableCollection<Unit>()
