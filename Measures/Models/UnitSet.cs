@@ -16,7 +16,7 @@ namespace Measures.Models
         public string SIUnit { get; set; }
 
         // 数据显示精度
-        private int _precision=6;
+        private int _precision = 6;
         public int Precision
         {
             get { return _precision; }
@@ -123,7 +123,7 @@ namespace Measures.Models
                             {
                                 dblSeed = double.Parse(item.Seed);
                                 dblFactor = double.Parse(item.Factor);
-                            }                            
+                            }
                             item.Value = string.Format(strFormat, (dblValueSI / dblFactor - dblSeed));
                             item.PropertyChanged += OnValueChanged;
                         }
@@ -148,7 +148,7 @@ namespace Measures.Models
             }
             else if (str.Contains("rho"))
             {
-                return double.Parse(str.Replace("/rho", "")) / double.Parse(this.Rho);
+                return double.Parse(str.Replace("*rho", "")) * double.Parse(this.Rho) / 1000000;
             }
             else
                 return double.Parse(str);

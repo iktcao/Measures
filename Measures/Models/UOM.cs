@@ -136,12 +136,12 @@ namespace Measures.Models
                 new Unit("kgf_s__m2", "kgf-sec/m2", "9.80665", "0.0", "千克力·秒/平方米(kgf·s/m²)", "动力粘度（DynamicViscosity）"),
                 new Unit("lbf_s__ft2", "lbf-sec/ft2", "47.88", "0.0", "磅力·秒/平方英尺(lbf·s/ft²)", "动力粘度（DynamicViscosity）"),
                 new Unit("mN_s__m2", "mN s/m2", "0.001", "0.0", "毫牛·秒/平方米(mN·s/m²)", "动力粘度（DynamicViscosity）"),
-                new Unit("cst", "centistokes", "1.0/rho", "0.0", "厘斯(cSt)", "运动粘度（Kinematic Viscosity）"),
-                new Unit("st", "stokes", "100.0/rho", "0.0", "斯(St)", "运动粘度（Kinematic Viscosity）"),
-                new Unit("m2__s", "square meter per second", "1.0E+6/rho", "0.0", "平方米/秒(m²/s)", "运动粘度（Kinematic Viscosity）"),
-                new Unit("cm2__s", "square centimeter per second", "1.0E+2/rho", "0.0", "平方厘米/秒(cm²/s)", "运动粘度（Kinematic Viscosity）"),
-                new Unit("mm2__s", "square millimeter per second", "1.0/rho", "0.0", "平方毫米/秒(mm²/s)", "运动粘度（Kinematic Viscosity）"),
-                new Unit("in2__s", "square inch per second", "645.16/rho", "0.0", "平方英尺/秒(in²/s)", "运动粘度（Kinematic Viscosity）"),
+                new Unit("cst", "centistokes", "1.0*rho", "0.0", "厘斯(cSt)", "运动粘度（Kinematic Viscosity）"),
+                new Unit("st", "stokes", "100.0*rho", "0.0", "斯(St)", "运动粘度（Kinematic Viscosity）"),
+                new Unit("m2__s", "square meter per second", "1.0E+6*rho", "0.0", "平方米/秒(m²/s)", "运动粘度（Kinematic Viscosity）"),
+                new Unit("cm2__s", "square centimeter per second", "1.0E+2*rho", "0.0", "平方厘米/秒(cm²/s)", "运动粘度（Kinematic Viscosity）"),
+                new Unit("mm2__s", "square millimeter per second", "1.0*rho", "0.0", "平方毫米/秒(mm²/s)", "运动粘度（Kinematic Viscosity）"),
+                new Unit("in2__s", "square inch per second", "645.16*rho", "0.0", "平方英尺/秒(in²/s)", "运动粘度（Kinematic Viscosity）"),
             }
         };
 
